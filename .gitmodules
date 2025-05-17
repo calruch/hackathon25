@@ -1,0 +1,3 @@
+[submodule "hackathon25/opencanary"]
+	path = hackathon25/opencanary
+	url = https://github.com/thinkst/opencanary.git

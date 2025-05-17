@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployhoney
+  labels:
+    app: deployhoney
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deployhoney
+  template:
+    metadata:
+      labels:
+        app: deployhoney
+    spec:
+      containers:
+      - name: deployhoney
+        image: localhost:32000/canaryhoney:k8s
+        ports:
+        - name: http
+          containerPort: 80
+        - name: mysql
+          containerPort: 3306
+        volumeMounts:
+          - name: config
+            mountPath: /root/.opencanary.conf
+            subPath: .opencanary.conf
+      volumes:
+      - name: config
+        configMap:
+          name: opencanary-config
+          items:
+          - key: .opencanary.conf
+            path: .opencanary.conf
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: honeyport-svc
+spec:
+  type: NodePort
+  selector:
+    app: deployhoney
+  ports:
+  - name: mysql
+    port: 3306
+    targetPort: 3306
+    nodePort: 30078
+  - name: http
+    port: 80
+    targetPort: 80
+    nodePort: 30079
+
+
