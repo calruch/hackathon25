@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.env
+.env.*
+
+# Editor folders
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+
+# Python packaging
+*.egg-info/
+dist/
+build/
+
+# Model weights — don’t track these
+add-cat-service/models/

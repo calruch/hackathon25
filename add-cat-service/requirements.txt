@@ -1,0 +1,8 @@
+# backend/requirements.txt
+flask>=2.0
+torch
+diffusers
+transformers
+accelerate
+safetensors
+pillow
