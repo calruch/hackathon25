@@ -1,8 +1,6 @@
 FROM python:3.13-alpine
 WORKDIR /app
-COPY create_credentials.py .
-COPY app.py .
-COPY templates ./templates
+COPY . .
 RUN pip install -r requirements.txt
 RUN python3 create_credentials.py
-CMD ["python3", "gateway.py"]
+CMD ["python3", "app.py"]

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}ToUpper Service{% endblock %}
+
+{% block content %}
+  <h1>ToUpper Service</h1>
+  <form action="{{ url_for('main_page', secret_key=key) }}" method="post">
+    <input type="text" name="text" placeholder="Enter text to uppercase" required>
+    <button type="submit">Convert</button>
+  </form>
+
+  {% if result %}
+    <h2>Result:</h2>
+    <p>{{ result }}</p>
+  {% endif %}
+{% endblock %}

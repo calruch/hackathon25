@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather
+  template:
+    metadata:
+      labels:
+        app: weather
+    spec:
+      containers:
+      - name: weather-container
+        image: localhost:32000/weather:k8s
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather-service
+spec:
+  type: NodePort
+  selector:
+    app: weather
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 30082
+
+---
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: weather-restart
+spec:
+  schedule: "*/2 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: restart
+            image: bitnami/kubectl:latest
+            command:
+            - /bin/sh
+            - -c
+            - |
+              kubectl rollout restart deployment/weather-deployment
+          restartPolicy: OnFailure

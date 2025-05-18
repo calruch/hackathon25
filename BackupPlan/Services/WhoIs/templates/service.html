@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Whois Service{% endblock %}
+
+{% block content %}
+  <h1>Whois Lookup</h1>
+  <form action="{{ url_for('main_page', secret_key=key) }}" method="post">
+    <input type="text" name="target" placeholder="Enter IP or hostname" required />
+    <button type="submit">Lookup</button>
+  </form>
+
+  {% if result %}
+    <h2>Result:</h2>
+    <div style="white-space: pre-wrap; border: 1px solid #ccc; padding: 1rem;">{{ result | safe }}</div>
+  {% endif %}
+{% endblock %}

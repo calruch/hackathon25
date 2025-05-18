@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+      - name: gateway-container
+        image: localhost:32000/gateway:k8s
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service
+spec:
+  type: NodePort
+  selector:
+    app: gateway
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+      nodePort: 32080

@@ -153,30 +153,38 @@ microk8s status --wait-ready
 echo ""
 
 echo "===== BUILDING DOCKER IMAGES ====="
-docker build -t frontend:latest frontend
+docker build -t gateway:latest Login_Gateway
 sleep 3
-docker build -t weather:latest weather
+docker build -t to-upper:latest Services/ToUpper
+sleep 3
+docker build -t weather:latest Services/Weather
 sleep 5
 echo ""
 
 echo "===== TAGGING IMAGES ====="
-docker tag frontend:latest localhost:32000/frontend:k8s
+docker tag gateway:latest localhost:32000/gateway:k8s
+sleep 3
+docker tag to-upper:latest localhost:32000/to-upper:k8s
 sleep 3
 docker tag weather:latest localhost:32000/weather:k8s
 sleep 5
 echo ""
 
 echo "===== PUSHING IMAGES ====="
-docker push localhost:32000/frontend:k8s
+docker push localhost:32000/gateway:k8s
+sleep 3
+docker push localhost:32000/to-upper:k8s
 sleep 3
 docker push localhost:32000/weather:k8s
 sleep 5
 echo ""
 
 echo "===== DEPLOYING ====="
-microk8s kubectl apply -f frontend/config-test.yaml
+microk8s kubectl apply -f Login_Gateway/gateway-config.yaml
 sleep 5
-microk8s kubectl apply -f weather/config.yaml
+microk8s kubectl apply -f Services/ToUpper/config.yaml
+sleep 60
+microk8s kubectl apply -f Services/Weather/config.yaml
 echo ""
 
 echo "===== HURRY UP AND WAIT ====="
