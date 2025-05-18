@@ -10,12 +10,6 @@ gateway_url = "http://gateway-service:5000/pathway"
 
 ip = socket.gethostbyname(socket.gethostname())
 
-requests.post(
-    gateway_url,
-    headers={"passphrase": passphrase},
-    data={"service": service, "ip": ip}
-)
-
 app = Flask(__name__, template_folder="templates")
 
 @app.route(f"/{service}/<secret_key>", methods=["GET", "POST"])

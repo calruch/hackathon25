@@ -1,4 +1,5 @@
 #!/bin/bash
-./deploy.sh
+
+sudo ./deploy.sh
 ./build.sh
 ./buildhoney.sh
