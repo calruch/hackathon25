@@ -15,10 +15,12 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: localhost:32000/frontend:k8s       # ← replace with your actual image
+        image: localhost:32000/frontend:k8s
         env:
-        - name: BACKEND_URL
+        - name: ADD_CAT_URL
           value: "http://add-cat:5000"
+        - name: WEATHER_URL
+          value: "http://weather:5000"
         ports:
         - containerPort: 5000
 ---

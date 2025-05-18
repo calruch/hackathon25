@@ -6,8 +6,7 @@ class Config:
     SESSION_KEY    = os.getenv("SESSION_KEY", "Gandalf_the_White")
     CREDENTIALS_FILE = os.getenv("CREDENTIALS_FILE", "credentials.txt")
 
-    # backend service URL for in-painting
-    ADD-CAT_URL    = os.getenv("BACKEND_URL", "http://backend:5000")
-
+    # backend service URLs
+    ADD_CAT_URL    = os.getenv("BACKEND_URL", "http://localhost:5000")
     WEATHER_URL = os.getenv("WEATHER_SERVICE_URL", "http://localhost:5001")
 

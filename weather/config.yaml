@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: weather
-        image: your-dockerhub-username/weather-service:latest
+        image: localhost:32000/weather:k8s
         ports:
         - containerPort: 5001
         env:
