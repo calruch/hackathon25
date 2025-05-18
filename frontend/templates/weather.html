@@ -1,9 +1,0 @@
-<h1>Weather Lookup</h1>
-<form action="{{ weather_url }}/weather/{{ secret_key }}" method="post">
-  <input name="city" placeholder="Enter city" required>
-  <button type="submit">Go</button>
-</form>
-
-{% if weather %}
-  <pre>{{ weather }}</pre>
-{% endif %}

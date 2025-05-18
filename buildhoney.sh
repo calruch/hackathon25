@@ -1,6 +1,7 @@
 #! /bin/bash
 
 if [ $# -eq 0 ]; then
+    microk8s kubectl create configmap opencanary-config --from-file=.opencanary.conf=./opencanary/data/.opencanary.conf
     cd opencanary
     docker build -t canaryhoney -f Dockerfile.latest .
     cd ..

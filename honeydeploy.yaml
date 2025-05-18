@@ -20,8 +20,6 @@ spec:
         ports:
         - name: http
           containerPort: 80
-        - name: mysql
-          containerPort: 3306
         volumeMounts:
           - name: config
             mountPath: /root/.opencanary.conf
@@ -45,10 +43,6 @@ spec:
   selector:
     app: deployhoney
   ports:
-  - name: mysql
-    port: 3306
-    targetPort: 3306
-    nodePort: 30078
   - name: http
     port: 80
     targetPort: 80
