@@ -3,7 +3,7 @@
 {% block content %}
   <h1>Welcome, {{ session.get('username') }}!</h1>
   <ul>
-    <li><a href="{{ url_for('add_cat') }}">Add a Cat to Your Image</a></li>
-    <li><a href="{{ url_for('placeholder') }}">Placeholder Service</a></li>
+    <li><a href="{{ url_for('add-cat') }}">Add a Cat to Your Image</a></li>
+    <li><a href="{{ url_for('weather') }}">Check the Weather</a></li>
   </ul>
 {% endblock %}

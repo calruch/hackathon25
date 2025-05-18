@@ -26,8 +26,8 @@
     <ul>
       {% if session.get('logged_in') %}
         <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-        <li><a href="{{ url_for('add_cat') }}">Add Cat</a></li>
-        <li><a href="{{ url_for('placeholder') }}">Placeholder</a></li>
+        <li><a href="{{ url_for('add-cat') }}">Add Cat</a></li>
+        <li><a href="{{ url_for('weather') }}">Weather</a></li>
         <li><a href="{{ url_for('logout') }}">Logout</a></li>
       {% else %}
         <li><a href="{{ url_for('login') }}">Login</a></li>

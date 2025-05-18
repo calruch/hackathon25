@@ -155,28 +155,28 @@ echo ""
 echo "===== BUILDING DOCKER IMAGES ====="
 docker build -t frontend:latest frontend
 sleep 3
-docker build -t add-cat-service:latest add-cat-service
+docker build -t weather:latest weather
 sleep 5
 echo ""
 
 echo "===== TAGGING IMAGES ====="
 docker tag frontend:latest localhost:32000/frontend:k8s
 sleep 3
-docker tag add-cat-service:latest localhost:32000/add-cat-service:k8s
+docker tag weather:latest localhost:32000/weather:k8s
 sleep 5
 echo ""
 
 echo "===== PUSHING IMAGES ====="
 docker push localhost:32000/frontend:k8s
 sleep 3
-docker push localhost:32000/add-cat-service:k8s
+docker push localhost:32000/weather:k8s
 sleep 5
 echo ""
 
 echo "===== DEPLOYING ====="
 microk8s kubectl apply -f frontend/config-test.yaml
 sleep 5
-microk8s kubectl apply -f add-cat-service/config-test.yaml
+microk8s kubectl apply -f weather/config-test.yaml
 echo ""
 
 echo "===== HURRY UP AND WAIT ====="

@@ -7,4 +7,7 @@ class Config:
     CREDENTIALS_FILE = os.getenv("CREDENTIALS_FILE", "credentials.txt")
 
     # backend service URL for in-painting
-    BACKEND_URL    = os.getenv("BACKEND_URL", "http://backend:5000")
+    ADD-CAT_URL    = os.getenv("BACKEND_URL", "http://backend:5000")
+
+    WEATHER_URL = os.getenv("WEATHER_SERVICE_URL", "http://localhost:5001")
+

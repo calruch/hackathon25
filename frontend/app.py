@@ -8,7 +8,8 @@ from werkzeug.security import check_password_hash
 app = Flask(__name__, template_folder="templates")
 app.config.from_object("config.Config")
 
-app.jinja_env.globals["backend_url"] = app.config["BACKEND_URL"]
+app.jinja_env.globals["add-cat_url"] = app.config["ADD-CAT_URL"]
+app.jinja_env.globals["weather_url"] = app.config["WEATHER_URL"]
 
 credentials = {}
 with open(app.config["CREDENTIALS_FILE"]) as f:
@@ -53,11 +54,11 @@ def add_cat():
         return redirect(url_for("login"))
     return render_template("add-cat.html")
 
-@app.route("/placeholder")
-def placeholder():
+@app.route("/weather")
+def weather():
     if not session.get("logged_in"):
         return redirect(url_for("login"))
-    return render_template("placeholder.html")
+    return render_template("weather.html")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
