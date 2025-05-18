@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: deployback
-        image: localhost:32000/backside:k8s
+        image: localhost:32000/weather:k8s
 
 ---
 
@@ -29,7 +29,7 @@ spec:
   selector:
     app: deployback
   ports:
-  - port: 80
+  - port: 5000
     targetPort: 5000
     nodePort: 30080
 
