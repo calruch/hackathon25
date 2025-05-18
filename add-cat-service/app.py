@@ -26,7 +26,7 @@ if Config.LORA_PATH:
 pipeline.to(device)
 pipeline.enable_attention_slicing()
 
-@app.route("/inpaint", methods=["POST"])
+@app.route("/add-cat", methods=["POST"])
 def inpaint():
     # accept multipart/form-data or JSON
     if 'image' not in request.files:

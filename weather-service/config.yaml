@@ -1,0 +1,30 @@
+# Kubernetes Deployment for weather service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather
+  template:
+    metadata:
+      labels:
+        app: weather
+    spec:
+      containers:
+      - name: weather
+        image: your-dockerhub-username/weather-service:latest
+        ports:
+        - containerPort: 5001
+        env:
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: weather-secret
+              key: SECRET_KEY
+        - name: PORT
+          value: "5001"
+        - name: WEATHER_FORMAT
+          value: "3"
