@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Who's That Pokémon?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Press Start 2P', sans-serif;
+    }
+
+    body {
+      background: url("{{ url_for('static', filename='imgs/wtp.png') }}") no-repeat center center fixed;
+      background-size: 100% 100%;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    #score {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 1.25rem;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    #pokemon-sprite {
+      position: absolute;
+      top: 50%;
+      left: 30%;
+      transform: translate(-50%, -50%);
+      height: 500px;
+      width: auto;
+      filter: brightness(0) saturate(100%);
+      transition: filter 0.3s;
+    }
+
+    #pokemon-sprite.reveal {
+      filter: none;
+    }
+
+    #options {
+      position: absolute;
+      top: 35%;
+      left: 65%;
+      transform: translate(-50%, -50%);
+      display: grid;
+      grid-template-columns: repeat(2, 300px);
+      grid-gap: 20px;
+    }
+
+    .option-btn,
+    #next-btn {
+      font-family: 'Press Start 2P', sans-serif;
+      padding: 20px;
+      font-size: 1.5vw;
+      min-font-size: 0.75rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.7);
+      color: #333;
+      white-space: nowrap;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    #next-btn {
+      position: absolute;
+      top: 55%;
+      left: 65%;
+      transform: translateX(-50%);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #result {
+      position: absolute;
+      top: calc(50% + 360px);
+      left: 30%;
+      transform: translateX(-50%);
+      font-size: 1.5rem;
+      color: #ffd700;
+      text-shadow: 1px 1px 2px #000;
+    }
+  </style>
+</head>
+<body>
+  <div id="score">Score: <span id="score-val">0</span></div>
+  <img id="pokemon-sprite" src="" alt="Who's That Pokémon?">
+  <div id="options"></div>
+  <div id="result"></div>
+  <button id="next-btn" class="hidden">Guess Another</button>
+
+  <script>
+    let currentQuestion = null;
+    let score = 0;
+    const service = "pokequiz";
+    const secretKey = "{{ key }}";
+
+    async function loadQuestion() {
+      document.getElementById('next-btn').classList.add('hidden');
+      document.getElementById('result').textContent = '';
+      const res = await fetch(`/${service}/${secretKey}/question`);
+      currentQuestion = await res.json();
+      const sprite = document.getElementById('pokemon-sprite');
+      sprite.src = currentQuestion.sprite_url;
+      sprite.classList.remove('reveal');
+      const optsContainer = document.getElementById('options');
+      optsContainer.innerHTML = '';
+
+      currentQuestion.options.forEach(name => {
+        const btn = document.createElement('button');
+        btn.textContent = name;
+        btn.className = 'option-btn';
+        btn.addEventListener('click', () => selectOption(name));
+        optsContainer.appendChild(btn);
+        adjustButtonFontSize(btn);
+      });
+    }
+
+    function selectOption(name) {
+      const sprite = document.getElementById('pokemon-sprite');
+      sprite.classList.add('reveal');
+      document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+      const resultEl = document.getElementById('result');
+      if (name === currentQuestion.correct_name) {
+        score++;
+        resultEl.textContent = `Correct! It was ${name}.`;
+      } else {
+        score = 0;
+        resultEl.textContent = `Incorrect! It was ${currentQuestion.correct_name}.`;
+      }
+      document.getElementById('score-val').textContent = score;
+      document.getElementById('next-btn').classList.remove('hidden');
+    }
+
+    function adjustButtonFontSize(button) {
+      const style = window.getComputedStyle(button);
+      let fontSize = parseFloat(style.fontSize);
+      const minFontSize = 8;
+      while (button.scrollWidth > button.clientWidth && fontSize > minFontSize) {
+        fontSize -= 1;
+        button.style.fontSize = fontSize + 'px';
+      }
+    }
+
+    document.getElementById('next-btn').addEventListener('click', loadQuestion);
+    loadQuestion();
+  </script>
+</body>
+</html>
